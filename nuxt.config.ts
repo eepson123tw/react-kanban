@@ -2,15 +2,22 @@
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineNuxtConfig({
-  css: ['~/assets/css/tailwind.css'],
+  routeRules: {
+    // Pre-render
+    '/404.html': { prerender: true },
+    // Redirects
+    '/': { prerender: true },
+  },
   vite: {
     plugins: [
       tailwindcss(),
     ],
   },
-  compatibilityDate: '2024-11-01',
   modules: [
     'shadcn-nuxt',
+    '@vueuse/nuxt',
+    '@pinia/nuxt',
+    '@nuxt/icon',
   ],
   shadcn: {
     /**
@@ -23,10 +30,22 @@ export default defineNuxtConfig({
      */
     componentDir: './app/components/ui',
   },
-
+  css: [
+    '~/assets/css/tailwind.css',
+  ],
   sourcemap: true,
   future: {
     compatibilityVersion: 4,
   },
+  app: {
+    pageTransition: false,
+    layoutTransition: false,
+  },
+  imports: {
+    dirs: [
+      './app/lib',
+    ],
+  },
+  compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
 })

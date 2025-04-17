@@ -1,4 +1,18 @@
 {
   // https://nuxt.com/docs/guide/concepts/typescript
-  "extends": "./.nuxt/tsconfig.json"
+  "extends": "./.nuxt/tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "~/*": ["./app/*"],
+      "~/components/*": ["./app/components/*"],
+      "~/lib/*": ["./app/lib/*"],
+      "~/composables/*": ["./app/composables/*"],
+      "~/lib/utils": ["./app/lib/utils"],
+      "~/assets": ["./app/assets"]
+    }
+  }
+  // "include": [
+  //   "app/types/index.d.ts"
+  // ]
+
 }
