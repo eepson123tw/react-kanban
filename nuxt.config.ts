@@ -10,7 +10,7 @@ export default defineNuxtConfig({
   },
   compatibilityDate: '2024-11-01',
   modules: [
-    'shadcn-nuxt'
+    'shadcn-nuxt',
   ],
   shadcn: {
     /**
@@ -21,12 +21,12 @@ export default defineNuxtConfig({
      * Directory that the component lives in.
      * @default "./components/ui"
      */
-    componentDir: './app/components/ui'
+    componentDir: './app/components/ui',
   },
-  
+
   sourcemap: true,
   future: {
-    compatibilityVersion: 4
+    compatibilityVersion: 4,
   },
-  devtools: { enabled: true }
+  devtools: { enabled: true },
 })
