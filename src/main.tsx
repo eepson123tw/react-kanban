@@ -15,7 +15,11 @@ import { ThemeProvider } from './context/theme-context'
 import './index.css'
 // Generated Routes
 import { routeTree } from './routeTree.gen'
+import setupLocatorUI from "@locator/runtime";
 
+if (process.env.NODE_ENV === "development") {
+  setupLocatorUI();
+}
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {

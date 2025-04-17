@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -29,7 +28,7 @@ export default function KanbanDashboard() {
       {/* ===== Main ===== */}
       <Main>
         <div className='mb-4 flex items-center justify-between'>
-          <h1 className='text-2xl font-bold tracking-tight'>Project Management</h1>
+          <h1 className='text-2xl font-bold tracking-tight'>Project groove</h1>
           <div className='flex items-center space-x-2'>
             <Button variant="outline">Export Board</Button>
             <Button>New Project</Button>
@@ -40,7 +39,7 @@ export default function KanbanDashboard() {
           <TabsList>
             <TabsTrigger value='board'>Kanban Board</TabsTrigger>
             <TabsTrigger value='tasks'>Task List</TabsTrigger>
-            <TabsTrigger value='timeline' disabled>Timeline</TabsTrigger>
+            <TabsTrigger value='timeline'>Timeline</TabsTrigger>
             <TabsTrigger value='calendar' disabled>Calendar</TabsTrigger>
           </TabsList>
           
@@ -62,6 +61,16 @@ export default function KanbanDashboard() {
             <Card>
               <CardHeader>
                 <CardTitle>All Tasks</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p>Task list view will be implemented here.</p>
+              </CardContent>
+            </Card>
+          </TabsContent>
+			<TabsContent value='timeline' className='space-y-4'>
+            <Card>
+              <CardHeader>
+                <CardTitle>All Timeline Tasks</CardTitle>
               </CardHeader>
               <CardContent>
                 <p>Task list view will be implemented here.</p>
