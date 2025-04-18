@@ -61,8 +61,6 @@ const dir = computed(() => textDirection.value === 'rtl' ? 'rtl' : 'ltr')
       <NuxtLayout>
         <NuxtPage />
       </NuxtLayout>
-
-      <AppSettings />
     </div>
     <Sonner class="pointer-events-auto" />
   </ConfigProvider>
