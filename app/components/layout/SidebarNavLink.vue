@@ -25,7 +25,7 @@ function isActive(link: string) {
 <template>
   <SidebarMenu>
     <SidebarMenuItem>
-      <SidebarMenuButton as-child :tooltip="item.title" :size="size" :is-active="isActive">
+      <SidebarMenuButton as-child :tooltip="item.title" :size="size" :is-active="isActive(item.link)">
         <NuxtLink :to="item.link" active-class="bg-secondary" @click="setOpenMobile(false)">
           <Icon :name="item.icon || ''" mode="svg" />
           <span>{{ item.title }}</span>

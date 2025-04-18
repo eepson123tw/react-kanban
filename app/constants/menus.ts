@@ -12,6 +12,16 @@ export const navMenu: NavMenu[] = [
     ],
   },
   {
+    heading: 'Collaboration',
+    items: [
+      {
+        title: 'Tiptap',
+        icon: 'i-lucide-home',
+        link: '/CollaborativeEditor',
+      },
+    ],
+  },
+  {
     heading: 'Pages',
     items: [
       {
