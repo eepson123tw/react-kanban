@@ -16,8 +16,23 @@ export const navMenu: NavMenu[] = [
     items: [
       {
         title: 'Tiptap',
-        icon: 'i-lucide-home',
+        icon: 'i-lucide-edit',
         link: '/CollaborativeEditor',
+      },
+    ],
+  },
+  {
+    heading: 'Gantt',
+    items: [
+      {
+        title: 'Gantt-jsgantt-improved',
+        icon: 'i-lucide-chart-area',
+        link: '/Gantt',
+      },
+      {
+        title: 'Gantt-dhtmlx-gantt',
+        icon: 'i-lucide-chart-area',
+        link: '/Gantt2',
       },
     ],
   },

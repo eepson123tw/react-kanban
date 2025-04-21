@@ -1,0 +1,893 @@
+
+:root {
+  --gantt-font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  
+  /* Base colors */
+  --gantt-background: 0 0% 100%;
+  --gantt-foreground: 222.2 84% 4.9%;
+  
+  /* Card colors */
+  --gantt-card: 0 0% 100%;
+  --gantt-card-foreground: 222.2 84% 4.9%;
+
+  /* Border colors */
+  --gantt-border: 214.3 31.8% 91.4%;
+  --gantt-input: 214.3 31.8% 91.4%;
+  
+  /* Primary colors */
+  --gantt-primary: 222.2 47.4% 11.2%;
+  --gantt-primary-foreground: 210 40% 98%;
+  
+  /* Secondary colors */
+  --gantt-secondary: 210 40% 96.1%;
+  --gantt-secondary-foreground: 222.2 47.4% 11.2%;
+  
+  /* Accent colors */
+  --gantt-accent: 210 40% 96.1%;
+  --gantt-accent-foreground: 222.2 47.4% 11.2%;
+  
+  /* Destructive colors */
+  --gantt-destructive: 0 84.2% 60.2%;
+  --gantt-destructive-foreground: 210 40% 98%;
+  
+  /* Muted colors */
+  --gantt-muted: 210 40% 96.1%;
+  --gantt-muted-foreground: 215.4 16.3% 46.9%;
+  
+  /* Popover colors */
+  --gantt-popover: 0 0% 100%;
+  --gantt-popover-foreground: 222.2 84% 4.9%;
+  
+  /* Radius */
+  --gantt-radius: 0.5rem;
+  
+  /* Task colors */
+  --gantt-task-blue: 210 70% 50%;
+  --gantt-task-red: 0 70% 50%;
+  --gantt-task-green: 120 70% 50%;
+  --gantt-task-yellow: 50 90% 60%;
+  --gantt-task-purple: 280 70% 50%;
+  --gantt-task-pink: 320 70% 80%;
+  
+  /* Shadows */
+  --gantt-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --gantt-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.dark {
+  --gantt-background: 222.2 84% 4.9%;
+  --gantt-foreground: 210 40% 98%;
+  
+  --gantt-card: 222.2 84% 4.9%;
+  --gantt-card-foreground: 210 40% 98%;
+  
+  --gantt-popover: 222.2 84% 4.9%;
+  --gantt-popover-foreground: 210 40% 98%;
+  
+  --gantt-primary: 210 40% 98%;
+  --gantt-primary-foreground: 222.2 47.4% 11.2%;
+  
+  --gantt-secondary: 217.2 32.6% 17.5%;
+  --gantt-secondary-foreground: 210 40% 98%;
+  
+  --gantt-muted: 217.2 32.6% 17.5%;
+  --gantt-muted-foreground: 215 20.2% 65.1%;
+  
+  --gantt-accent: 217.2 32.6% 17.5%;
+  --gantt-accent-foreground: 210 40% 98%;
+  
+  --gantt-destructive: 0 62.8% 30.6%;
+  --gantt-destructive-foreground: 210 40% 98%;
+  
+  --gantt-border: 217.2 32.6% 17.5%;
+  --gantt-input: 217.2 32.6% 17.5%;
+  
+  /* Task colors - adjusted for dark mode */
+  --gantt-task-blue: 210 70% 60%;
+  --gantt-task-red: 0 70% 60%;
+  --gantt-task-green: 120 70% 60%;
+  --gantt-task-yellow: 50 90% 70%;
+  --gantt-task-purple: 280 70% 60%;
+  --gantt-task-pink: 320 70% 90%;
+}
+
+/* Base styles */
+div.gantt {
+  font-family: var(--gantt-font-sans);
+  font-size: 0.875rem;
+  color: hsl(var(--gantt-foreground));
+  background-color: hsl(var(--gantt-background));
+  border-radius: var(--gantt-radius);
+}
+
+.gantt table {
+  border-collapse: collapse;
+}
+
+.gantt td {
+  padding: 0;
+}
+
+/* Cell styles */
+.gmajorheading,
+.gminorheading,
+.gminorheadingwkend,
+.gtaskcell,
+.gtaskcellcurrent,
+.gtaskcellwkend {
+  height: 1.5rem;
+  font-size: 0.875rem;
+  border: 1px solid hsl(var(--gantt-border));
+  text-align: center;
+  cursor: default;
+}
+
+.gtasklist {
+  height: 1.5rem;
+  min-width: 5px;
+  max-width: 5px;
+  width: 5px;
+  border: 1px solid hsl(var(--gantt-border));
+  border-right: none;
+}
+
+.gtasknolist-label {
+  padding: 0.625rem 3.125rem;
+}
+
+/* Heading styles */
+.gtaskheading,
+.gmajorheading,
+.gminorheading {
+  background-color: hsl(var(--gantt-background));
+  font-weight: 600;
+  font-size: 0.8125rem;
+  white-space: nowrap;
+}
+
+.gtaskcellwkend,
+.gminorheadingwkend {
+  background-color: hsl(var(--gantt-muted));
+  font-weight: 600;
+  font-size: 0.8125rem;
+  white-space: nowrap;
+}
+
+.gtaskcellcurrent {
+  background-color: hsl(var(--gantt-accent) / 0.3);
+  border-color: hsl(var(--gantt-accent) / 0.5);
+}
+
+td.gtaskcell {
+  text-align: left;
+}
+
+td.gspanning {
+  border-left: none;
+  border-right: none;
+}
+
+.gtaskcelldiv {
+  position: relative;
+}
+
+/* Task list styles */
+.gtaskheading,
+.gname,
+.gtaskname,
+.gres,
+.gdur,
+.gcomp,
+.gstartdate,
+.gplanstartdate,
+.gplanenddate,
+.gcost,
+.genddate {
+  height: 1.5rem;
+  white-space: nowrap;
+  border: 1px solid hsl(var(--gantt-border));
+}
+
+.gtaskheading div,
+.gname div,
+.gtaskname div,
+.gres div,
+.gdur div,
+.gcomp div,
+.gstartdate div,
+.gplanstartdate div,
+.gplanenddate div,
+.gcost div,
+.genddate div {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.gtaskbarcontainer.gplan {
+  position: absolute !important;
+  top: 0;
+  opacity: 0.3;
+  background: hsl(var(--gantt-background));
+  z-index: 10000;
+  border: 1px solid hsl(var(--gantt-primary));
+}
+
+/* Date styles */
+.gstartdate div,
+.gplanstartdate,
+.gplanenddate,
+.gstartdate,
+.genddate {
+  text-align: center;
+  min-width: 105px;
+  width: 105px;
+  max-width: 105px;
+  font-size: 0.75rem;
+}
+
+.gtaskheading {
+  text-align: center;
+}
+
+.gtaskname div,
+.gtaskname {
+  min-width: 170px;
+  max-width: 220px;
+  width: 220px;
+  font-size: 0.875rem;
+  border-left: none;
+}
+
+.gtaskheading,
+.gtaskname {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.gtaskname.gtaskeditable div,
+.gtaskname.gtaskeditable {
+  overflow: unset;
+}
+
+.gselector {
+  text-align: left;
+  white-space: nowrap;
+  min-width: 170px;
+  max-width: 170px;
+  width: 170px;
+}
+
+/* Form label styles */
+.gformlabel {
+  position: relative;
+  top: 0;
+  cursor: pointer;
+  border: 1px solid transparent;
+  margin-left: 0.125rem;
+  padding-left: 0.125rem;
+  padding-right: 0.125rem;
+  border-radius: var(--gantt-radius);
+}
+
+span.gformlabel:hover,
+span.gselected {
+  background-color: hsl(var(--gantt-accent));
+  border: 1px solid hsl(var(--gantt-border));
+}
+
+span.gfoldercollapse {
+  color: hsl(var(--gantt-foreground));
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.875rem;
+  font-family: var(--gantt-font-sans);
+}
+
+/* Table styles */
+.gtasktableh,
+.gtasktable {
+  border-right: 1px solid hsl(var(--gantt-border));
+  width: 100%;
+}
+
+.gcharttableh,
+.gtasktableh,
+.gtasktable,
+.gcharttable {
+  border-collapse: collapse;
+}
+
+.gcharttable,
+.gcharttableh {
+  table-layout: fixed;
+}
+
+.gcharttable {
+  border: 1px solid hsl(var(--gantt-border));
+}
+
+/* Row styles */
+.ggroupitem {
+  background-color: hsl(var(--gantt-muted) / 0.5);
+  font-weight: 600;
+}
+
+.gmileitem,
+.glineitem {
+  background-color: hsl(var(--gantt-background));
+}
+
+/* Highlight row */
+.gitemhighlight td {
+  background-image: none;
+  background-color: hsl(var(--gantt-accent) / 0.2);
+}
+
+.gitemdifferent td {
+  background-image: none;
+  background-color: hsl(var(--gantt-muted) / 0.3);
+}
+
+/* Caption styles */
+.gmilecaption,
+.ggroupcaption,
+.gcaption {
+  font-weight: normal;
+  font-size: 0.75rem;
+  text-align: left;
+  white-space: nowrap;
+  position: absolute;
+  top: 0.125rem;
+}
+
+.ggroupcaption,
+.gcaption {
+  right: -126px;
+}
+
+/* Task completion bar */
+.gtaskcomplete {
+  float: left;
+  overflow: hidden;
+}
+
+.gtaskcomplete {
+  height: 5px;
+  background-color: hsl(var(--gantt-primary));
+  margin-top: 4px;
+  opacity: 0.4;
+}
+
+/* Milestone styles */
+.gmilestone {
+  font-size: 0.875rem;
+  position: absolute;
+  top: -0.125rem;
+}
+
+.gmdtop {
+  top: 0.125rem;
+  overflow: hidden;
+  width: 0;
+  height: 0;
+  border-bottom: 5px solid hsl(var(--gantt-primary));
+  border-left: 5px solid transparent;
+  border-top: 5px solid transparent;
+  border-right: 5px solid transparent;
+}
+
+.gmdbottom {
+  top: 0.125rem;
+  overflow: hidden;
+  width: 0;
+  height: 0;
+  border-top: 5px solid hsl(var(--gantt-primary));
+  border-left: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-right: 5px solid transparent;
+}
+
+/* Task bar styles */
+.ggroupblack,
+.gtaskblue,
+.gtaskred,
+.gtaskgreen,
+.gtaskyellow,
+.gtaskpurple,
+.gtaskpink {
+  height: 13px;
+  opacity: 0.9;
+  margin-top: 1px;
+  border-radius: calc(var(--gantt-radius) / 2);
+}
+
+/* Group task bar */
+.ggroupblack {
+  height: 7px;
+  background: hsl(var(--gantt-primary));
+  margin-top: 2px;
+  border-radius: calc(var(--gantt-radius) / 2);
+}
+
+.ggroupblackendpointleft {
+  overflow: hidden;
+  width: 0;
+  height: 0;
+  top: 2px;
+  border-top: 4px solid hsl(var(--gantt-primary));
+  border-left: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-right: 4px solid transparent;
+  float: left;
+}
+
+.ggroupblackendpointright {
+  overflow: hidden;
+  width: 0;
+  height: 0;
+  top: 2px;
+  border-top: 4px solid hsl(var(--gantt-primary));
+  border-left: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-right: 4px solid transparent;
+  float: right;
+}
+
+.ggroupblackcomplete {
+  float: left;
+  overflow: hidden;
+  height: 3px;
+  opacity: 0.8;
+  background-color: hsl(var(--gantt-primary-foreground));
+  margin-top: 2px;
+  margin-bottom: 2px;
+  border-radius: calc(var(--gantt-radius) / 4);
+}
+
+/* Task colors */
+.gtaskblue {
+  background-color: hsl(var(--gantt-task-blue));
+  box-shadow: var(--gantt-shadow);
+}
+
+.gtaskred {
+  background-color: hsl(var(--gantt-task-red));
+  box-shadow: var(--gantt-shadow);
+}
+
+.gtaskgreen {
+  background-color: hsl(var(--gantt-task-green));
+  box-shadow: var(--gantt-shadow);
+}
+
+.gtaskyellow {
+  background-color: hsl(var(--gantt-task-yellow));
+  box-shadow: var(--gantt-shadow);
+}
+
+.gtaskpurple {
+  background-color: hsl(var(--gantt-task-purple));
+  box-shadow: var(--gantt-shadow);
+}
+
+.gtaskpink {
+  background-color: hsl(var(--gantt-task-pink));
+  box-shadow: var(--gantt-shadow);
+}
+
+.gtaskbluecomplete,
+.gtaskredcomplete,
+.gtaskgreencomplete,
+.gtaskyellowcomplete,
+.gtaskpurplecomplete,
+.gtaskpinkcomplete {
+  float: left;
+  overflow: hidden;
+  height: 5px;
+  opacity: 0.4;
+  background-color: hsl(var(--gantt-primary));
+  margin-top: 4px;
+  border-radius: calc(var(--gantt-radius) / 4);
+}
+
+/* Line styles */
+.glinev {
+  border-left: 1px solid;
+  width: 0;
+}
+
+.glineh {
+  border-top: 1px solid;
+  height: 0;
+}
+
+/* Dependency styles */
+.gDepFS,
+.gDepSS,
+.gDepSF,
+.gDepFF {
+  border-color: hsl(var(--gantt-destructive));
+}
+
+.gDepFSArw,
+.gDepSSArw {
+  overflow: hidden;
+  width: 0;
+  height: 0;
+  border-bottom: 4px solid transparent;
+  border-left: 4px solid hsl(var(--gantt-destructive));
+  border-top: 4px solid transparent;
+  border-right: 4px solid transparent;
+}
+
+.gDepFFArw,
+.gDepSFArw {
+  overflow: hidden;
+  width: 0;
+  height: 0;
+  border-bottom: 4px solid transparent;
+  border-left: 4px solid transparent;
+  border-top: 4px solid transparent;
+  border-right: 4px solid hsl(var(--gantt-destructive));
+}
+
+.gCurDate {
+  border-color: hsl(210, 100%, 50%);
+}
+
+/* Taskbar container */
+div.gtaskbarcontainer {
+  z-index: 1;
+  position: absolute;
+  top: 0;
+}
+
+/* Text bar */
+.textbar {
+  word-break: break-all;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 40%;
+  display: inline-block;
+}
+
+/* Tooltip styles */
+.JSGanttToolTip {
+  position: absolute;
+  display: block;
+  z-index: 10000;
+}
+
+.JSGanttToolTipcont {
+  font-family: var(--gantt-font-sans);
+  font-size: 0.75rem;
+  display: block;
+  background: hsl(var(--gantt-popover));
+  color: hsl(var(--gantt-popover-foreground));
+  border-radius: var(--gantt-radius);
+  box-shadow: var(--gantt-shadow-md);
+}
+
+.gTaskInfo {
+  background: hsl(var(--gantt-accent));
+  width: 400px;
+  border: 1px solid hsl(var(--gantt-border));
+  border-radius: var(--gantt-radius);
+  padding: 0.5rem;
+}
+
+.gTtTitle {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: hsl(var(--gantt-foreground));
+  margin-left: 0.25rem;
+  margin-bottom: 1em;
+}
+
+.gTaskLabel {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: hsl(var(--gantt-foreground));
+  margin-left: 0.25rem;
+}
+
+.gTaskText {
+  position: absolute;
+  left: 90px;
+  padding-top: 1px;
+  font-size: 0.75rem;
+  color: hsl(var(--gantt-foreground));
+}
+
+.gTaskNotes {
+  font-size: 0.8125rem;
+  color: hsl(var(--gantt-foreground));
+  padding: 0 15px;
+  display: block;
+}
+
+.gTIn {
+  padding-top: 10px;
+}
+
+/* Layout styles */
+.gantt {
+  min-width: 632px; /* 2x LC width */
+}
+
+.gchartcontainer {
+  line-height: 1;
+  display: flex;
+}
+
+.gcontainercol {
+  position: relative;
+}
+
+.glistgrid {
+  min-width: 132px;
+  float: left;
+  padding: 0;
+  background-color: hsl(var(--gantt-background));
+  overflow: hidden;
+}
+
+.glistlbl {
+  min-width: 132px;
+  float: left;
+  padding: 0;
+  background-color: hsl(var(--gantt-background));
+  overflow: hidden;
+  flex: none;
+}
+
+.glistlbl,
+.gchartgrid {
+  display: flex;
+  flex-direction: column;
+}
+
+.glabelfooter {
+  clear: both;
+}
+
+.ggridfooter {
+  clear: both;
+}
+
+.rhscrpad {
+  width: 150px;
+  position: absolute;
+  top: 0;
+  height: 1px;
+}
+
+.gchartgrid {
+  padding: 0;
+  background-color: hsl(var(--gantt-background));
+  position: relative;
+  overflow: unset;
+  overflow-y: auto;
+  min-height: 0%;
+}
+
+.gchartlbl {
+  padding: 0;
+  background-color: hsl(var(--gantt-background));
+  position: relative;
+  overflow: hidden;
+  flex: none;
+}
+
+/* Main layout */
+.gmain {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  resize: horizontal;
+}
+
+.gmainright {
+  overflow: hidden;
+  flex: 1 1 auto;
+}
+
+.gmainleft {
+  overflow: hidden;
+  flex: 0 0 20%;
+  min-width: 220px;
+  flex: 1 0 auto;
+}
+
+.gtasktableh tr,
+.gcharttable tr,
+.gcharttableh tr,
+.gtasktable tr {
+  height: 22px !important;
+}
+
+.gtasktableouterwrapper {
+  overflow: hidden;
+}
+
+.gtasktablewrapper {
+  overflow-y: scroll;
+  flex: auto;
+  height: 100%;
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--gantt-muted)) transparent;
+}
+
+.chartgrid {
+  overflow: auto;
+  flex: auto;
+}
+
+/* Additional fields */
+.gadditional {
+  border: 1px solid hsl(var(--gantt-border));
+  border-radius: calc(var(--gantt-radius) / 2);
+}
+
+.gadditional,
+.gres,
+.gdur,
+.gcomp,
+.gcost {
+  text-align: center;
+  width: 70px;
+  max-width: 70px;
+  min-width: 70px;
+  font-size: 0.75rem;
+}
+
+/* Print styles */
+@media print {
+  html,
+  .gchartgrid {
+    overflow: unset !important;
+  }
+
+  .glistgrid {
+    float: none !important;
+  }
+
+  /* Hide scrollbar */
+  .gchartcontainer *::-webkit-scrollbar {
+    display: none;
+  }
+
+  .gchartcontainer * {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Hide tooltip */
+  .JSGanttToolTip {
+    display: none !important;
+  }
+
+  /* Task bar print styles */
+  .ggroupblack {
+    height: 0;
+    border-top: 7px solid;
+    border-color: hsl(var(--gantt-primary));
+  }
+
+  .gtaskblue {
+    height: 0;
+    border-top: 13px solid;
+    border-color: hsl(var(--gantt-task-blue));
+  }
+
+  .gtaskred {
+    height: 0;
+    border-top: 13px solid;
+    border-color: hsl(var(--gantt-task-red));
+  }
+
+  .gtaskgreen {
+    height: 0;
+    border-top: 13px solid;
+    border-color: hsl(var(--gantt-task-green));
+  }
+
+  .gtaskyellow {
+    height: 0;
+    border-top: 13px solid;
+    border-color: hsl(var(--gantt-task-yellow));
+  }
+
+  .gtaskpurple {
+    height: 0;
+    border-top: 13px solid;
+    border-color: hsl(var(--gantt-task-purple));
+  }
+
+  .gtaskpink {
+    height: 0;
+    border-top: 13px solid;
+    border-color: hsl(var(--gantt-task-pink));
+  }
+
+  .gtaskbluecomplete,
+  .gtaskredcomplete,
+  .gtaskgreencomplete,
+  .gtaskyellowcomplete,
+  .gtaskpurplecomplete,
+  .gtaskpinkcomplete {
+    height: 0;
+    opacity: 0.4;
+    margin-top: -9px;
+    border-top: 5px solid;
+    border-color: hsl(var(--gantt-primary));
+  }
+
+  .ggroupblackcomplete {
+    height: 0;
+    opacity: 0.8;
+    margin-top: -5px;
+    border-top: 3px solid;
+    border-color: hsl(var(--gantt-muted-foreground));
+  }
+
+  .gmainright,
+  .gmainleft {
+    overflow: hidden;
+    width: auto;
+  }
+
+  table {
+    page-break-after: auto;
+  }
+
+  tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+
+  td {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+
+  thead {
+    display: table-header-group;
+  }
+
+  tfoot {
+    display: table-footer-group;
+  }
+}
+
+/* Modern scrollbar styling */
+.frame::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.frame::-webkit-scrollbar-thumb {
+  border-radius: var(--gantt-radius);
+  border: 2px solid transparent;
+  background-color: hsl(var(--gantt-muted-foreground) / 0.5);
+  background-clip: content-box;
+}
+
+.frame::-webkit-scrollbar-track {
+  background-color: hsl(var(--gantt-muted) / 0.3);
+  border-radius: var(--gantt-radius);
+}
+
+.frame:hover::-webkit-scrollbar-thumb {
+  background-color: hsl(var(--gantt-muted-foreground) / 0.7);
+}
+
+.gscrollbar-calculation-container {
+  visibility: hidden;
+  overflow: scroll;
+  -ms-overflow-style: scrollbar;
+  display: block;
+}
