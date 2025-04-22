@@ -23,14 +23,24 @@ type GanttTask = typeof mockData.data[number] & { pGantt?: GanttOptions }
 
 // Reference to the chart DOM element
 const ganttChartRef = ref<HTMLElement | null>(null)
-const contentJSON = ref({})
+const contentJSON = ref<typeof mockData>()
 // Reference to the chart instance
 let ganttChart: any = null
+const page = ref(1)
 
-useAsyncData('gannt', async () => {
-  contentJSON.value = mockData.data
-  await Promise.resolve()
+// Expose methods or data if needed
+defineExpose({
+  refreshChart,
 })
+const { data } = await useAsyncData(
+  'gantt',
+  () => $fetch('/api/gantt'),
+  {
+    watch: [page],
+  },
+)
+contentJSON.value = data.value?.mockData
+
 onMounted(() => {
   // Ensure the DOM element is available
   if (!ganttChartRef.value)
@@ -79,11 +89,6 @@ function refreshChart() {
     ganttChart.Draw()
   }
 }
-
-// Expose methods or data if needed
-defineExpose({
-  refreshChart,
-})
 </script>
 
 <template>

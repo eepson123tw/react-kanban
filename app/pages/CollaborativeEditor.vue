@@ -40,7 +40,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   modelValue: '',
-  maxLimit: 1000,
+  maxLimit: 4000,
 })
 
 const emit = defineEmits<{
@@ -148,7 +148,55 @@ watch(() => props.modelValue, (value) => {
 
 onMounted(() => {
   editor.value = new Editor({
-    content: props.modelValue,
+    content: `<h1>🚀 Project: Thor New Project</h1>
+<p><strong>Status:</strong> Planning</p>
+<p><strong>Priority:</strong> 🔥 Critical</p>
+<p><strong>Category:</strong> Marketing</p>
+<p><strong>Visibility:</strong> Public</p>
+<p><strong>Tags:</strong> #need-help</p>
+
+<h2>📝 Description</h2>
+<p>Our mission is to build a strong, valuable project within two months. This project focuses on marketing innovation, and we'll be conducting interviews to validate ideas and collect feedback.</p>
+
+<h2>🎯 Goals & Milestones</h2>
+<ul>
+  <li><strong>⏳ Timeline:</strong> 2 months – set key check-ins every 2 weeks.</li>
+  <li><strong>🔍 Deep Research:</strong> Dive into the target audience, competitor analysis, and content strategy.</li>
+  <li><strong>🎤 Interview Task:</strong> Identify and reach out to at least 5 relevant interviewees (marketers, users, or experts) to understand needs and refine direction.</li>
+</ul>
+
+<h2>👥 Team Members</h2>
+<ul>
+  <li><strong>Aaron</strong> – Developer</li>
+  <li><strong>Jirong</strong> – Developer</li>
+  <li><strong>YK</strong> – Project Manager</li>
+</ul>
+
+<h2>💰 Budget</h2>
+<p>💸 <strong>Budget:</strong> 1 unit (Consider specifying the currency and what "1" represents — is this symbolic or literal?)</p>
+
+<h2>🧭 Action Guide</h2>
+<ol>
+  <li><strong>Kick-off Meeting:</strong> Align on objectives, assign research areas.</li>
+  <li><strong>Interview Planning:</strong>
+    <ul>
+      <li>Define interview objectives (e.g., understand pain points, validate features).</li>
+      <li>Make a list of potential interviewees.</li>
+      <li>Prepare a semi-structured interview script.</li>
+    </ul>
+  </li>
+  <li><strong>Project Plan Draft:</strong> Timeline, roles, delivery goals.</li>
+  <li><strong>Design Initial Assets:</strong> Landing page, deck, branding rough draft.</li>
+  <li><strong>Progress Reviews:</strong> Weekly standups and mid-project retrospective.</li>
+</ol>
+
+<h2>📌 Suggestions</h2>
+<ul>
+  <li>Consider naming the project more specifically (e.g., “Thor Marketing Sprint Q2”).</li>
+  <li>Set SMART goals: Specific, Measurable, Achievable, Relevant, Time-bound.</li>
+  <li>Add a section for risks or blockers to preemptively manage issues.</li>
+</ul>
+`,
     extensions: [
       StarterKit,
       Underline,

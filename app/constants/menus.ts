@@ -22,6 +22,16 @@ export const navMenu: NavMenu[] = [
     ],
   },
   {
+    heading: 'Project',
+    items: [
+      {
+        title: 'test',
+        icon: 'i-lucide-edit',
+        link: 'Project',
+      },
+    ],
+  },
+  {
     heading: 'Gantt',
     items: [
       {
