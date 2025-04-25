@@ -115,6 +115,8 @@ const newResourceLink = ref('')
 const isSaving = ref(false)
 const showSuccessAlert = ref(false)
 
+const { data: projectSetting } = useAsyncData('api/project', () => $fetch('/api/project'))
+
 // Form methods
 function addGoal() {
   if (newGoal.value.trim()) {
@@ -207,16 +209,14 @@ async function saveProject() {
     isSaving.value = false
   }
 }
-
-// No date formatting needed without date fields
 </script>
 
 <template>
-  <div class="container mx-auto px-4 py-8">
+  <div class="container mx-auto">
     <form @submit.prevent="saveProject">
-      <div class="space-y-8">
+      <div class="space-y-4">
         <!-- Header -->
-        <div class="flex flex-col space-y-1.5">
+        <div>
           <h2 class="text-3xl font-bold tracking-tight">
             Create New Project
           </h2>
