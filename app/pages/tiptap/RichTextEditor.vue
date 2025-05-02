@@ -25,6 +25,7 @@ import {
   Pilcrow,
   Quote,
   Redo,
+  Star,
   Strikethrough,
   Subscript as SubscriptIcon,
   Superscript as SuperscriptIcon,
@@ -75,6 +76,7 @@ const textActions = ref<TextAction[]>([
   { slug: 'undo', icon: Undo, active: 'undo' },
   { slug: 'redo', icon: Redo, active: 'redo' },
   { slug: 'clear', icon: Delete, active: 'clear' },
+  { slug: 'aiGen', icon: Star, active: 'aiGen' },
 ])
 
 // Bubble menu actions (appears when text is selected)
@@ -144,7 +146,7 @@ function onActionClick(slug: string, option: string | null = null) {
 
   type ActionKey = 'bold' | 'italic' | 'underline' | 'strike' | 'bulletList' | 'orderedList' |
     'align' | 'subscript' | 'superscript' | 'undo' | 'redo' | 'clear' | 'code' |
-    'heading1' | 'heading2' | 'heading3' | 'paragraph' | 'blockquote'
+    'heading1' | 'heading2' | 'heading3' | 'paragraph' | 'blockquote' | 'aiGen'
 
   const actionTriggers: Record<ActionKey, () => void> = {
     bold: () => vm.toggleBold().run(),
@@ -172,6 +174,30 @@ function onActionClick(slug: string, option: string | null = null) {
     heading3: () => vm.toggleHeading({ level: 3 }).run(),
     paragraph: () => vm.setParagraph().run(),
     blockquote: () => vm.toggleBlockquote().run(),
+    aiGen: () => {
+      if (!editor.value)
+        return
+
+      const { empty: selectionIsEmpty, from: selectionFrom, to: selectionTo } = editor.value.state.selection
+
+      const selectionContainsText = selectionIsEmpty || editor.value.state.doc.textBetween(selectionFrom, selectionTo, ' ')
+
+      if (!selectionIsEmpty) {
+        // Replace selected text with new content
+        editor.value.chain()
+          .focus()
+          .deleteRange({ from: selectionFrom, to: selectionTo })
+          .insertContent(`${selectionContainsText}aaaaaaaaaaaaaaa`)
+          .run()
+      }
+      else {
+        // Insert at current position if no text is selected
+        editor.value.chain()
+          .focus()
+          .insertContent('aaaaaaaaaaaaaaa')
+          .run()
+      }
+    },
   }
 
   if (slug in actionTriggers) {
