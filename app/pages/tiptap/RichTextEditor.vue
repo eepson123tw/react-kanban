@@ -32,6 +32,7 @@ import {
   Underline as UnderlineIcon,
   Undo,
 } from 'lucide-vue-next'
+import { OpenAI } from 'openai'
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
 interface TextAction {
@@ -138,6 +139,46 @@ function updateContent() {
   }
 }
 
+function initializeOpenAIClient() {
+  return new OpenAI({
+    apiKey: '',
+    dangerouslyAllowBrowser: true, // Only for client-side use, consider server-side proxy instead
+  })
+}
+
+async function processTextWithGPT(text: string) {
+  try {
+    const client = initializeOpenAIClient()
+    let processedText = ''
+
+    const stream = await client.chat.completions.create({
+      model: 'gpt-4o',
+      messages: [
+        {
+          role: 'system',
+          content: 'You are a helpful assistant that reformats text to make it clearer and more effective. Maintain the original meaning but improve the formatting, style, and clarity. and add the meow into the end',
+        },
+        {
+          role: 'user',
+          content: `Please reformat and improve the following text:\n\n${text} and reply me the pure text <which is user lang> no need to any check message only the reformat pure text`,
+        },
+      ],
+      stream: true,
+    })
+
+    for await (const chunk of stream) {
+      const content = chunk.choices[0]?.delta?.content || ''
+      processedText += content
+    }
+
+    return processedText
+  }
+  catch (error) {
+    console.error('Error processing text with GPT:', error)
+    throw error
+  }
+}
+
 function onActionClick(slug: string, option: string | null = null) {
   if (!editor.value)
     return
@@ -174,28 +215,64 @@ function onActionClick(slug: string, option: string | null = null) {
     heading3: () => vm.toggleHeading({ level: 3 }).run(),
     paragraph: () => vm.setParagraph().run(),
     blockquote: () => vm.toggleBlockquote().run(),
-    aiGen: () => {
+    aiGen: async () => {
       if (!editor.value)
         return
 
       const { empty: selectionIsEmpty, from: selectionFrom, to: selectionTo } = editor.value.state.selection
 
-      const selectionContainsText = selectionIsEmpty || editor.value.state.doc.textBetween(selectionFrom, selectionTo, ' ')
+      if (selectionIsEmpty) {
+      // No text selected - perhaps show a message to the user
+      // You could use a toast notification or alert here
+        console.warn('Please select text to reformat')
+        return
+      }
 
-      if (!selectionIsEmpty) {
-        // Replace selected text with new content
+      // Get the selected text
+      const selectedText = editor.value.state.doc.textBetween(selectionFrom, selectionTo, ' ')
+
+      if (!selectedText.trim()) {
+        console.warn('Selected text is empty')
+        return
+      }
+
+      try {
+        // Option 1: Replace with a placeholder while processing
         editor.value.chain()
           .focus()
           .deleteRange({ from: selectionFrom, to: selectionTo })
-          .insertContent(`${selectionContainsText}aaaaaaaaaaaaaaa`)
+          .insertContent('Processing with AI...')
           .run()
-      }
-      else {
-        // Insert at current position if no text is selected
+
+        // Process the text with GPT
+        const formattedText = await processTextWithGPT(selectedText)
+
+        // Get the current cursor position after inserting the placeholder
+        const currentPos = editor.value.state.selection.from
+
+        // Replace the placeholder with the formatted text
         editor.value.chain()
           .focus()
-          .insertContent('aaaaaaaaaaaaaaa')
+          .deleteRange({
+            from: currentPos - 'Processing with AI...'.length,
+            to: currentPos,
+          })
+          .insertContent(formattedText)
           .run()
+      }
+      catch (error) {
+      // Handle errors - maybe revert to original text
+        editor.value.chain()
+          .focus()
+          .deleteRange({
+            from: editor.value.state.selection.from - 'Processing with AI...'.length,
+            to: editor.value.state.selection.from,
+          })
+          .insertContent(selectedText)
+          .run()
+
+        console.error('Failed to process text:', error)
+      // Show error notification to user
       }
     },
   }
